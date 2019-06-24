@@ -96,3 +96,29 @@ fn test_complex_conjugate() {
     assert_eq!(conjugate.re, 4.0);
     assert_eq!(conjugate.im, 3.0);
 }
+
+// Programming Drill 1.3.1
+// Write a program that converts a complex number 
+// from its Cartesian representation to its polar
+// representation and vice versa.
+
+fn cartesian_to_polar(x: Complex32) -> (f32, f32) {
+    let theta = x.im.atan2(x.re);
+    (complex_modulus(x), theta)
+}
+
+fn polar_to_cartesian(ro: f32, theta: f32) -> Complex32 {
+    Complex32::new(ro * theta.cos(), ro * theta.sin())
+}
+
+#[test]
+fn test_cartesian_to_polar() {
+    let x = Complex32::new(4.0, 2.0);
+    assert_eq!(cartesian_to_polar(x), x.to_polar());
+}
+
+#[test]
+fn test_polar_to_cartesian() {
+    use num_complex::Complex;
+    assert_eq!(polar_to_cartesian(4.6, -3.14), Complex::from_polar(&4.6, &-3.14));
+}
