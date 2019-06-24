@@ -2,6 +2,10 @@
 
 use num_complex::Complex32;
 
+// Programming Drill 1.1.1
+// Write a program that accepts two complex numbers and 
+// outputs their sum and product.
+
 fn sum_complex(x: Complex32, y: Complex32) -> Complex32 {
     Complex32::new(x.re + y.re, x.im + y.im)
 }
@@ -31,6 +35,13 @@ fn test_multiply_complex() {
     assert_eq!(z.im, 11.0);
 }
 
+// Programming Drill 1.2.1
+// Take the program that you wrote in the last programming 
+// drill and make it also perform subtraction and division
+// of complex numbers. In addition, let the user enter a
+// complex number and have the computer return its modulus
+// and conjugate.
+
 fn subtract_complex(x: Complex32, y: Complex32) -> Complex32 {
     Complex32::new(x.re - y.re, x.im - y.im)
 }
@@ -43,6 +54,15 @@ fn divide_complex(x: Complex32, y: Complex32) -> Complex32 {
     let n2 = x.im * y.re - x.re * y.im;
     
     Complex32::new(n1 / denominator, n2 / denominator)
+}
+
+fn complex_modulus(x: Complex32) -> f32 {
+    let sq_sum = x.re.powi(2) + x.im.powi(2);
+    sq_sum.sqrt()
+}
+
+fn complex_conjugate(x: Complex32) -> Complex32 {
+    Complex32::new(x.re, -x.im)     
 }
 
 #[test]
@@ -63,3 +83,16 @@ fn test_divide_complex() {
     assert_eq!(z.im, 1.0);
 }
 
+#[test]
+fn test_complex_modulus() {
+    let x = Complex32::new(4.0, -3.0);
+    assert_eq!(complex_modulus(x), 5.0)
+}
+
+#[test]
+fn test_complex_conjugate() {
+    let x = Complex32::new(4.0, -3.0);
+    let conjugate = complex_conjugate(x);
+    assert_eq!(conjugate.re, 4.0);
+    assert_eq!(conjugate.im, 3.0);
+}
