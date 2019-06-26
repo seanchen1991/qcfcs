@@ -229,3 +229,44 @@ fn test_complex_vector_inner_product() {
     let expected = arr1(&[Complex32::new(-76.0, 52.0), Complex32::new(67.0, 3.0)]);
     assert_eq!(complex_vector_inner_product(x, y), expected);
 }
+
+// Programming Drill 2.4.2
+// Write a function that calculates the norm of a given complex vector.
+
+pub fn complex_norm(x: Complex32) -> f32 {
+    (x.re.powi(2) + x.im.powi(2)).sqrt()
+}
+
+pub fn complex_vector_norm(x: Array1<Complex32>) -> f32 {
+    let sum_of_squares = x.fold(0.0, |acc, xval| acc + complex_norm(*xval).powi(2));
+    sum_of_squares.sqrt()
+}
+
+#[test]
+fn test_complex_vector_norm() {
+    let x = arr1(&[
+        Complex32::new(4.0, 3.0), 
+        Complex32::new(6.0, -4.0), 
+        Complex32::new(12.0, -7.0),
+        Complex32::new(0.0, 13.0)
+    ]);
+    let expected = 439.0_f32.sqrt();
+    assert_eq!(complex_vector_norm(x), expected);
+}
+
+// Programming Drill 2.4.3
+// Write a function that calculates the distance of two given complex vectors.
+
+pub fn complex_vector_distance(x: Array1<Complex32>, y: Array1<Complex32>) -> f32 {
+    complex_vector_norm(x - y)
+}
+
+#[test]
+fn test_complex_vector_distance() {
+    let x = arr1(&[Complex32::new(14.0, 4.0), Complex32::new(2.0, -3.0)]);
+    let y = arr1(&[Complex32::new(-6.0, 2.0), Complex32::new(11.0, -15.0)]);
+    let expected = 629.0_f32.sqrt(); 
+
+    assert_eq!(complex_vector_distance(x.clone(), x.clone()), 0.0);
+    assert_eq!(complex_vector_distance(x, y), expected);
+}
