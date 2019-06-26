@@ -1,10 +1,11 @@
 #![allow(dead_code)]
 
 use num_complex::Complex32;
-use ndarray::{arr2, Array2};
+use ndarray::{arr1, arr2, Array1, Array2};
 use crate::chapter_1::{
     sum_complex,
     multiply_complex,
+    complex_conjugate,
 };
 
 // Programming Drill 2.1.1
@@ -209,4 +210,22 @@ fn test_complex_matrix_multiply() {
     ]);
 
     assert_eq!(complex_matrix_multiply(x, y), expected);
+}
+
+// Programming Drill 2.4.1
+// Write a function that accepts two complex vectors of length n and 
+// calculates their inner product. 
+
+pub fn complex_vector_inner_product(x: Array1<Complex32>, y: Array1<Complex32>) -> Array1<Complex32> {
+    let dx = x.reversed_axes().map(|xval| complex_conjugate(*xval));
+    let answer = dx * y;
+    answer
+}
+
+#[test]
+fn test_complex_vector_inner_product() {
+    let x = arr1(&[Complex32::new(14.0, 4.0), Complex32::new(2.0, -3.0)]);
+    let y = arr1(&[Complex32::new(-6.0, 2.0), Complex32::new(11.0, -15.0)]);
+    let expected = arr1(&[Complex32::new(-76.0, 52.0), Complex32::new(67.0, 3.0)]);
+    assert_eq!(complex_vector_inner_product(x, y), expected);
 }
