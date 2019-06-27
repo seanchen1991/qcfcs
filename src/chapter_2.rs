@@ -216,10 +216,13 @@ fn test_complex_matrix_multiply() {
 // Write a function that accepts two complex vectors of length n and 
 // calculates their inner product. 
 
-pub fn complex_vector_inner_product(x: Array1<Complex32>, y: Array1<Complex32>) -> Array1<Complex32> {
-    let dx = x.reversed_axes().map(|xval| complex_conjugate(*xval));
-    let answer = dx * y;
+pub fn complex_vector_dagger_op(x: Array1<Complex32>) -> Array1<Complex32> {
+    let answer = x.reversed_axes().map(|xval| complex_conjugate(*xval));
     answer
+}
+
+pub fn complex_vector_inner_product(x: Array1<Complex32>, y: Array1<Complex32>) -> Array1<Complex32> {
+    complex_vector_dagger_op(x) * y
 }
 
 #[test]
@@ -269,4 +272,28 @@ fn test_complex_vector_distance() {
 
     assert_eq!(complex_vector_distance(x.clone(), x.clone()), 0.0);
     assert_eq!(complex_vector_distance(x, y), expected);
+}
+
+pub fn complex_matrix_dagger_op(x: Array2<Complex32>) -> Array2<Complex32> {
+    let answer = x.reversed_axes().map(|xval| complex_conjugate(*xval));
+    answer
+}
+
+pub fn is_matrix_hermitian(x: Array2<Complex32>) -> bool {
+    assert!(x.is_square());
+    complex_matrix_dagger_op(x.clone()) == x
+}
+
+#[test]
+fn test_is_matrix_hermitian() {
+    let x = arr2(&[
+        [Complex32::new(7.0, 0.0), Complex32::new(6.0, 5.0)],
+        [Complex32::new(6.0, -5.0), Complex32::new(-3.0, 0.0)]
+    ]); 
+    let y = arr2(&[
+        [Complex32::new(7.0, 0.0), Complex32::new(6.0, 5.0)],
+        [Complex32::new(6.0, 5.0), Complex32::new(3.0, 0.0)]
+    ]);
+    assert!(is_matrix_hermitian(x));
+    assert!(!is_matrix_hermitian(y));
 }
