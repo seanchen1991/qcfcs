@@ -297,3 +297,24 @@ fn test_is_matrix_hermitian() {
     assert!(is_matrix_hermitian(x));
     assert!(!is_matrix_hermitian(y));
 }
+
+// Programming Drill 2.6.2
+// Write a function that accepts a square matrix and tells if it is unitary.
+
+pub fn is_matrix_unitary(x: Array2<Complex32>) -> bool {
+    assert!(x.is_square());
+    let identity = arr2(&[
+        [Complex32::new(1.0, 0.0), Complex32::new(0.0, 0.0)],
+        [Complex32::new(0.0, 0.0), Complex32::new(1.0, 0.0)]
+    ]);
+    complex_matrix_dagger_op(x.clone()) * x == identity
+}
+
+// Programming Drill 2.7.1
+// Write a function that accepts two matrices and constructs their tensor product.
+
+pub fn matrix_tensor_product(x: Array2<Complex32>, y: Array2<Complex32>)-> Array2<Complex32> {
+
+}
+
+
