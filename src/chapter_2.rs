@@ -313,8 +313,8 @@ pub fn is_matrix_unitary(x: Array2<Complex32>) -> bool {
 // Programming Drill 2.7.1
 // Write a function that accepts two matrices and constructs their tensor product.
 
-pub fn matrix_tensor_product(x: Array2<Complex32>, y: Array2<Complex32>)-> Array2<Complex32> {
-
-}
+// pub fn matrix_tensor_product(x: Array2<Complex32>, y: Array2<Complex32>)-> Array2<Complex32> {
+// 
+// }
 
 
