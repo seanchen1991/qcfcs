@@ -315,6 +315,16 @@ pub fn is_matrix_unitary(x: Array2<Complex32>) -> bool {
     complex_matrix_dagger_op(x.clone()) * x == identity
 }
 
+#[test]
+fn test_is_matrix_unitary() {
+    let x = arr2(&[
+        [Complex32::new(0.5,0.5), Complex32::new(0.,1./3.0_f32.sqrt()), Complex32::new(3./(2.*15.0_f32.sqrt()),1./(2.*15.0_f32.sqrt()))],
+        [Complex32::new(-0.5,0.), Complex32::new(1./3.0_f32.sqrt(),0.), Complex32::new(4./(2.*15.0_f32.sqrt()),3./(2.*15.0_f32.sqrt()))],
+        [Complex32::new(0.5,0.), Complex32::new(-1./3.0_f32.sqrt()), Complex32::new(0.,5./2.*15.0_f32.sqrt()))],
+    ]);
+    assert!(is_matrix_unitary(x));
+}
+
 // Programming Drill 2.7.1
 // Write a function that accepts two matrices and constructs their tensor product.
 
