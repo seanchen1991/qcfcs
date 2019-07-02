@@ -1,7 +1,12 @@
 #![allow(dead_code)]
 
 use num_complex::Complex32;
-use ndarray::{arr1, arr2, Array1, Array2};
+use ndarray::{
+    arr1, 
+    arr2, 
+    Array1, 
+    Array2
+};
 use crate::chapter_1::{
     sum_complex,
     multiply_complex,
