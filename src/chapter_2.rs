@@ -345,21 +345,17 @@ fn test_matrix_tensor_product() {
         [Complex32::new(0.0,0.0),Complex32::new(1.0,0.0),Complex32::new(2.0,9.0)],
     ]);
 
-    // let expected = arr2(&[
-    //     [Complex32::new(3.0,2.0),Complex32::new(1.0,18.0),Complex32::new(29.0,-11.0),Complex32::new(5.0,-1.0),Complex32::new(19.0,17.0),Complex32::new(18.0,-40.0),Complex32::new(0.0,2.0),Complex32::new(-8.0,6.0),Complex32::new(14.0,10.0)],
-    //     [Complex32::new(26.0,26.0),Complex32::new(18.0,12.0),Complex32::new(-4.0,19.0),Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new()],
-    //     [Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new()],
-    //     [Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new()],
-    //     [Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new()],
-    //     [Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new()],
-    //     [Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new()],
-    //     [Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new()],
-    //     [Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new()],
-    // ]);
-    
-    let expected = arr2(&[
-        [Complex32::new(0.,0.)],
-    ]);
+     let expected = arr2(&[
+         [Complex32::new(3.,2.),Complex32::new(1.,18.),Complex32::new(29.,-11.),Complex32::new(5.,-1.),Complex32::new(19.,17.),Complex32::new(18.,-40.),Complex32::new(0.,2.),Complex32::new(-8.,6.),Complex32::new(14.,10.)],
+         [Complex32::new(26.,26.),Complex32::new(18.,12.),Complex32::new(-4.,19.),Complex32::new(52.,0.),Complex32::new(30.,-6.),Complex32::new(15.,23.),Complex32::new(-4.,20.),Complex32::new(0.,12.),Complex32::new(-10.,4.)],
+         [Complex32::new(0.,0.),Complex32::new(3.,2.),Complex32::new(-12.,31.),Complex32::new(0.,0.),Complex32::new(5.,-1.),Complex32::new(19.,43.),Complex32::new(0.,0.),Complex32::new(0.,2.),Complex32::new(-18.,4.)],
+         [Complex32::new(0.,0.),Complex32::new(0.,0.),Complex32::new(0.,0.),Complex32::new(12.,0.),Complex32::new(36.,48.),Complex32::new(60.,-84.),Complex32::new(6.,-3.),Complex32::new(30.,15.),Complex32::new(9.,-57.)],
+         [Complex32::new(0.,0.),Complex32::new(0.,0.),Complex32::new(0.,0.),Complex32::new(120.,24.),Complex32::new(72.,0.),Complex32::new(24.,60.),Complex32::new(66.,-18.),Complex32::new(36.,-18.),Complex32::new(27.,24.)],
+         [Complex32::new(0.,0.),Complex32::new(0.,0.),Complex32::new(0.,0.),Complex32::new(0.,0.),Complex32::new(12.,0.),Complex32::new(24.,108.),Complex32::new(0.,0.),Complex32::new(6.,-3.),Complex32::new(39.,48.)],
+         [Complex32::new(2.,0.),Complex32::new(6.,8.),Complex32::new(10.,-14.),Complex32::new(4.,4.),Complex32::new(-4.,28.),Complex32::new(48.,-8.),Complex32::new(9.,3.),Complex32::new(15.,45.),Complex32::new(66.,-48.)],
+         [Complex32::new(20.,4.),Complex32::new(12.,0.),Complex32::new(4.,10.),Complex32::new(32.,48.),Complex32::new(24.,24.),Complex32::new(-12.,28.),Complex32::new(84.,48.),Complex32::new(54.,18.),Complex32::new(3.,51.)],
+         [Complex32::new(0.,0.),Complex32::new(2.,0.),Complex32::new(4.,18.),Complex32::new(0.,0.),Complex32::new(4.,4.),Complex32::new(-28.,44.),Complex32::new(0.,0.),Complex32::new(9.,3.),Complex32::new(-9.,87.)],
+     ]);
 
     assert_eq!(matrix_tensor_product(&x, &y), expected);
 }
