@@ -1,9 +1,10 @@
 #![allow(dead_code)]
 
-use num_complex::Complex32;
+use num_complex::{Complex32};
 use ndarray::{
     arr1, 
     arr2, 
+    Array,
     Array1, 
     Array2
 };
@@ -321,13 +322,33 @@ fn test_is_matrix_hermitian() {
 // Programming Drill 2.6.2
 // Write a function that accepts a square matrix and tells if it is unitary.
 
+pub fn complex_identity_matrix(dim: usize) -> Array2<Complex32> {
+    let id = Array::from_shape_fn((dim, dim), |(x, y)| {
+        if x == y {
+            Complex32::new(1.,0.)
+        } else {
+            Complex32::new(0.,0.)
+        }
+    });
+
+    id
+}
+
+pub fn approx_eq(x: f32, y: f32) -> bool 
+{
+    let eps = 1.0e-6;
+    (x - y).abs() < eps
+}
+
 pub fn is_matrix_unitary(x: Array2<Complex32>) -> bool {
     assert!(x.is_square());
-    let identity = arr2(&[
-        [Complex32::new(1.0, 0.0), Complex32::new(0.0, 0.0)],
-        [Complex32::new(0.0, 0.0), Complex32::new(1.0, 0.0)]
-    ]);
-    complex_matrix_dagger_op(x.clone()) * x == identity
+    
+    let identity = complex_identity_matrix(x.shape()[0]); 
+    let unitary = complex_matrix_dagger_op(x.clone()).dot(&x); 
+
+    unitary.iter().zip(identity.iter()).all(|(x, y)| {
+        approx_eq(x.re, y.re) && approx_eq(x.im, y.im)
+    })
 }
 
 #[test]
@@ -339,6 +360,7 @@ fn test_is_matrix_unitary() {
         [Complex32::new(-0.5,0.), Complex32::new(1./3.0_f32.sqrt(),0.), Complex32::new(4./(2.*15.0_f32.sqrt()),3./(2.*15.0_f32.sqrt()))],
         [Complex32::new(0.5,0.), Complex32::new(0.,-1./3.0_f32.sqrt()), Complex32::new(0.,5./(2.*15.0_f32.sqrt()))],
     ]);
+
     assert!(is_matrix_unitary(x));
 }
 
