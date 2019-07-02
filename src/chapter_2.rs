@@ -352,8 +352,6 @@ pub fn is_matrix_unitary(x: Array2<Complex32>) -> bool {
 }
 
 #[test]
-// Fails due to a rounding error
-// Is there some library that provides assertions for numeric approximations?
 fn test_is_matrix_unitary() {
     let x = arr2(&[
         [Complex32::new(0.5,0.5), Complex32::new(0.,1./3.0_f32.sqrt()), Complex32::new(3./(2.*15.0_f32.sqrt()),1./(2.*15.0_f32.sqrt()))],
