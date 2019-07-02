@@ -313,8 +313,54 @@ pub fn is_matrix_unitary(x: Array2<Complex32>) -> bool {
 // Programming Drill 2.7.1
 // Write a function that accepts two matrices and constructs their tensor product.
 
-// pub fn matrix_tensor_product(x: Array2<Complex32>, y: Array2<Complex32>)-> Array2<Complex32> {
-// 
-// }
+pub fn matrix_tensor_product(x: &Array2<Complex32>, y: &Array2<Complex32>) -> Array2<Complex32> {
+    assert!(x.is_square() && y.is_square());
 
+    let xdim = x.shape()[0];
+    let ydim = y.shape()[0];
+    let zdim = xdim * ydim;
+    let mut answer = Array2::zeros((zdim, zdim));
+
+    for (mut chunk, elem) in answer
+        .exact_chunks_mut((ydim, ydim))
+        .into_iter()
+        .zip(x.iter()) {
+            chunk.assign(&(*elem * y))
+        }
+
+    answer
+}
+
+#[test]
+fn test_matrix_tensor_product() {
+    let x = arr2(&[
+        [Complex32::new(3.0,2.0), Complex32::new(5.0,-1.0), Complex32::new(0.0,2.0)],
+        [Complex32::new(0.0,0.0), Complex32::new(12.0,0.0), Complex32::new(6.0,-3.0)],
+        [Complex32::new(2.0,0.0), Complex32::new(4.0,4.0), Complex32::new(9.0,3.0)],
+    ]);
+
+    let y = arr2(&[
+        [Complex32::new(1.0,0.0), Complex32::new(3.0,4.0), Complex32::new(5.0,-7.0)],
+        [Complex32::new(10.0,2.0),Complex32::new(6.0,0.0),Complex32::new(2.0,5.0)],
+        [Complex32::new(0.0,0.0),Complex32::new(1.0,0.0),Complex32::new(2.0,9.0)],
+    ]);
+
+    // let expected = arr2(&[
+    //     [Complex32::new(3.0,2.0),Complex32::new(1.0,18.0),Complex32::new(29.0,-11.0),Complex32::new(5.0,-1.0),Complex32::new(19.0,17.0),Complex32::new(18.0,-40.0),Complex32::new(0.0,2.0),Complex32::new(-8.0,6.0),Complex32::new(14.0,10.0)],
+    //     [Complex32::new(26.0,26.0),Complex32::new(18.0,12.0),Complex32::new(-4.0,19.0),Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new()],
+    //     [Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new()],
+    //     [Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new()],
+    //     [Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new()],
+    //     [Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new()],
+    //     [Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new()],
+    //     [Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new()],
+    //     [Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new(),Complex32::new()],
+    // ]);
+    
+    let expected = arr2(&[
+        [Complex32::new(0.,0.)],
+    ]);
+
+    assert_eq!(matrix_tensor_product(&x, &y), expected);
+}
 

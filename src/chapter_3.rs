@@ -114,3 +114,21 @@ fn test_marble_exp1() {
     assert_eq!(marble_exp1(a.clone(), x.clone(), 2), expected);
     assert_eq!(marble_exp1(a.clone(), x.clone(), 4), expected);
 }
+
+// Programming Drill 3.2.1
+// Modify your program from exercise 3.1.1 so that the entries in the
+// matrices can be fractions as opposed to boolean values 
+
+pub fn f_matrix_pow(x: Array2<f32>, n: u32) -> Array2<f32> {
+    assert!(n > 0);
+
+    let mut result = x.clone();
+    (1..n).for_each(|_| result = result.dot(&x));
+    result
+}
+
+pub fn marble_exp2(m: Array2<f32>, x: Array1<f32>, n: u32) -> Array1<f32> {
+    let changes = f_matrix_pow(m, n);
+    let answer= changes.dot(&x);
+    answer
+}
