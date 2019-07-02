@@ -284,6 +284,21 @@ pub fn complex_matrix_dagger_op(x: Array2<Complex32>) -> Array2<Complex32> {
     answer
 }
 
+#[test]
+fn test_complex_matrix_dagger_op() {
+    let x = let x = arr2(&[
+        [Complex32::new(0.5,0.5), Complex32::new(0.,1./3.0_f32.sqrt()), Complex32::new(3./(2.*15.0_f32.sqrt()),1./(2.*15.0_f32.sqrt()))],
+        [Complex32::new(-0.5,0.), Complex32::new(1./3.0_f32.sqrt(),0.), Complex32::new(4./(2.*15.0_f32.sqrt()),3./(2.*15.0_f32.sqrt()))],
+        [Complex32::new(0.5,0.), Complex32::new(-1./3.0_f32.sqrt()), Complex32::new(0.,5./2.*15.0_f32.sqrt()))],
+    ]);
+    let expected = arr2(&[
+        [Complex32::new(6.,3.), Complex32::new(0.,0.), Complex32::new(1.,0.)],
+        [Complex32::new(2.,-12.), Complex32::new(5.,-2.1), Complex32::new(2.,-5.)],
+        [Complex32::new(0.,19.), Complex32::new(17.,0.), Complex32::new(3.,4.5)],
+    ]);
+    assert_eq!(complex_matrix_dagger_op(x), expected);
+}
+
 pub fn is_matrix_hermitian(x: Array2<Complex32>) -> bool {
     assert!(x.is_square());
     complex_matrix_dagger_op(x.clone()) == x
