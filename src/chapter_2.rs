@@ -334,8 +334,7 @@ pub fn complex_identity_matrix(dim: usize) -> Array2<Complex32> {
     id
 }
 
-pub fn approx_eq(x: f32, y: f32) -> bool 
-{
+pub fn approx_eq(x: f32, y: f32) -> bool {
     let eps = 1.0e-6;
     (x - y).abs() < eps
 }
